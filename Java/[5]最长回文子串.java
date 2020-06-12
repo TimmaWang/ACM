@@ -61,5 +61,28 @@ class Solution {
         return res;
 
     }
+    
+    
+    // 比较清晰的写法
+    class Solution {
+    public String longestPalindrome(String s) {
+        if(s.equals(""))  return s;
+
+        int len = s.length(),left = 0,right = 0;
+        // db[i][j] 表示字符串区间 [i, j] 是否为回文串
+        boolean[][] db = new boolean[len][len];
+        // 注意,这里的遍历与平常我们对字符串的遍历不一样
+        for(int j = 0;j<len;j++)
+            for(int i =0;i<=j;i++){
+                db[i][j] = (s.charAt(i) == s.charAt(j))&&(j-i<2 || db[i+1][j-1]);
+                //如果是回文字符串，并且比之前的回文字符串要长，更新字符串长度，记录字符串
+                if(db[i][j] && j-i>right-left){
+                    left = i;
+                    right = j;
+                }
+            }
+        return s.substring(left,right+1);
+    }
+}
 }
 //leetcode submit region end(Prohibit modification and deletion)
